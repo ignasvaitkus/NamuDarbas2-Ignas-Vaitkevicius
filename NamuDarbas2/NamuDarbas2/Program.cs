@@ -7,49 +7,56 @@ namespace NamuDarbas2
     {
         static void Main(string[] args)
         {
-            
-             Start:
+
+        Start:
 
             int y = 2;
             int[] magicNumber = new int[6];
-                InsertNumbers(magicNumber);
-                PrintNumbers(magicNumber);
-                Console.WriteLine();
-                if (!CheckNumbers(magicNumber))
-                { Console.WriteLine("Klaida, yra pasikartojantys skaiciai, bandykite is naujo"); goto Start; }
-                else Console.WriteLine("Visi skaiciai skirtingi, tesiama toliau..");
-                Middle:
+            InsertNumbers(magicNumber);
+            PrintNumbers(magicNumber);
+            Console.WriteLine();
+            if (!CheckNumbers(magicNumber))
+            { Console.WriteLine("Klaida, yra pasikartojantys skaiciai, bandykite is naujo"); goto Start; }
+            else Console.WriteLine("Visi skaiciai skirtingi, tesiama toliau..");
+            Middle:
 
-                int[] magicNumber2 = new int[6];
-                magicNumber2 = (int[])magicNumber.Clone();
+            int[] magicNumber2 = new int[6];
+            magicNumber2 = (int[])magicNumber.Clone();
 
-                if (MakeNewInt(y, magicNumber2) > 999999)
-                {
-                    Console.WriteLine("Magiskas skaicius per didelis, bandykite is naujo!");
-                    goto Start;
-                }
-                else
-                {
-                    int skaicius = MakeNewInt(y, magicNumber2);
-                    MakeNewArray(skaicius, magicNumber2);
-                }
+            if (MakeNewInt(y, magicNumber2) > 999999)
+            {
+                Console.WriteLine("Magiskas skaicius per didelis, bandykite is naujo!");
+                goto Start;
+            }
+            else
+            {
+                int skaicius = MakeNewInt(y, magicNumber2);
+                MakeNewArray(skaicius, magicNumber2);
+            }
+            if (CheckArray(magicNumber2, magicNumber))
+            {
                 Console.Write("Jusu magiskas skaicius: ");
                 PrintNumbers(magicNumber2);
                 Console.WriteLine(" " + y);
                 y++;
-                if(y<=6) goto Middle;
-            
-        }
-        
-        static void InsertNumbers( int[] skaiciai)
-        {
-            for(int i=0;i<skaiciai.Length;i++)
+                if (y <= 6) goto Middle;
+            }
+            else
             {
-               skaiciai[i] = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Jusu skaicius nera magiskas, bandykite is naujo!");
+                goto Start;
             }
         }
 
-        static void PrintNumbers(int [] skaiciai)
+        static void InsertNumbers(int[] skaiciai)
+        {
+            for (int i = 0; i < skaiciai.Length; i++)
+            {
+                skaiciai[i] = Convert.ToInt32(Console.ReadLine());
+            }
+        }
+
+        static void PrintNumbers(int[] skaiciai)
         {
             foreach (int number in skaiciai)
             {
@@ -57,17 +64,17 @@ namespace NamuDarbas2
             }
         }
 
-        static bool CheckNumbers(int [] skaiciai)
+        static bool CheckNumbers(int[] skaiciai)
         {
-            bool check=true;
-            for(int i=0;i<skaiciai.Length;i++)
+            bool check = true;
+            for (int i = 0; i < skaiciai.Length; i++)
             {
                 int skc1 = skaiciai[i];
-                for(int j=0;j<skaiciai.Length;j++)
+                for (int j = 0; j < skaiciai.Length; j++)
                 {
                     int skc2 = -1;
-                    if(i!=j) skc2 = skaiciai[j];
-                    if(skc1==skc2)
+                    if (i != j) skc2 = skaiciai[j];
+                    if (skc1 == skc2)
                     {
                         check = false;
                         break;
@@ -78,7 +85,7 @@ namespace NamuDarbas2
             return check;
         }
 
-        static int MakeNewInt(int y,int[] skaicius)
+        static int MakeNewInt(int y, int[] skaicius)
         {
 
             int sum = 0;
@@ -90,7 +97,7 @@ namespace NamuDarbas2
             }
             sum *= y;
             return sum;
-            
+
         }
         static void MakeNewArray(int sum, int[] skaicius)
         {
@@ -101,7 +108,20 @@ namespace NamuDarbas2
                 sum /= 10;
 
             }
-        
+
         }
-    }
-}
+        static bool CheckArray(int[] magicNumber1, int[] magicNumber2)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                int x = 0;
+                for (int j = 0; j < 6; j++)
+                {
+                    if (magicNumber1[i] == magicNumber2[j]) x++;
+                }
+                    if (x != 1) return false;
+                
+            }
+            return true;
+        }
+ }  }
